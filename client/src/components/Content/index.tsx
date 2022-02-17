@@ -1,14 +1,22 @@
-import { Form, Input } from 'antd';
-import React from 'react';
-import { saveUser } from '../../api/UsersApi';
-import { Container, StyledButton, StyledSwitch } from './styles';
+import { Card, Form, Input } from 'antd';
+import React, { useEffect, useState } from 'react';
+import { getUsers, saveUser } from '../../api/UsersApi';
+import { User } from '../../types/Users.type';
+import { CardContainer, Container, StyledButton, StyledSwitch } from './styles';
 
 type ContentProps = {
   changeThemeHandler: () => void;
 };
 
 export function Content(props: ContentProps) {
+  const [users, setUsers] = useState<User[]>([]);
   const { changeThemeHandler } = props;
+
+  const getNames = async () => {
+    const result = await getUsers();
+    setUsers(result.data);
+    console.log(result.data);
+  };
 
   const saveName = async (name: string) => {
     const result = await saveUser(name);
@@ -22,6 +30,10 @@ export function Content(props: ContentProps) {
   const onFinishFailed = (errorInfo: any) => {
     console.log('Failed:', errorInfo);
   };
+
+  useEffect(() => {
+    getNames();
+  }, []);
 
   return (
     <Container>
@@ -51,6 +63,16 @@ export function Content(props: ContentProps) {
           <StyledSwitch onClick={changeThemeHandler} />
         </Form.Item>
       </Form>
+      <CardContainer>
+        {users?.map((user) => {
+          return (
+            <Card size='small' title={user.name} style={{ width: 300 }}>
+              <StyledButton>Delete</StyledButton>
+              <StyledButton>Edit</StyledButton>
+            </Card>
+          );
+        })}
+      </CardContainer>
     </Container>
   );
 }
