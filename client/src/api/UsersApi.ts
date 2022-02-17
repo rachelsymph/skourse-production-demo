@@ -1,4 +1,3 @@
-import dotenv from 'dotenv/config';
 import axios from 'axios';
 import { GenericResponse } from '../types/Generics.type';
 import { SaveUserResponse } from '../types/Users.type';
