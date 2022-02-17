@@ -3,6 +3,7 @@ const app = express();
 const mongoose = require('mongoose');
 require('dotenv/config');
 
+const port = process.env.PORT || 8000;
 const users = require('./routes/users');
 const auth = require('./routes/authentication');
 
@@ -13,12 +14,10 @@ app.use(express.json());
 app.use('/api/users', users);
 app.use('/login', auth);
 
-// CRUD - CREATE READ UPDATE AND DELETE
-
 mongoose.connect(process.env.DATABASE_URI, { useNewUrlParser: true }, () => {
   console.log('connected to DB');
 });
 
-app.listen(8000, () => {
-  console.log('server is listening to port 8000');
+app.listen(port, () => {
+  console.log(`server is listening to port ${port}`);
 });
