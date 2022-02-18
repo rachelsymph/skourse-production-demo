@@ -6,7 +6,7 @@ import { Footer } from './components/Footer';
 import { Navbar } from './components/Navbar';
 import { GlobalStyle } from './styles';
 import { useTheme } from './useTheme';
-import { Content } from './components/Content';
+import { UsersPage } from './pages/Users';
 
 import 'antd/dist/antd.css';
 
@@ -18,7 +18,7 @@ function App() {
       <ThemeProvider theme={theme}>
         <GlobalStyle />
         <Navbar />
-        <Content changeThemeHandler={changeTheme} />
+        <UsersPage changeThemeHandler={changeTheme} />
         <Footer />
       </ThemeProvider>
     </>
