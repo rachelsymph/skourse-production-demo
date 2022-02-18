@@ -1,6 +1,6 @@
 type User = {
   name: string;
-  __id: string;
+  _id: string;
 };
 
 type SaveUserResponse = {

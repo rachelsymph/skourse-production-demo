@@ -9,14 +9,6 @@ export const Container = styled.div`
   flex-direction: column;
 `;
 
-export const CardContainer = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin: 10px;
-  flex-wrap: wrap;
-`;
-
 export const StyledButton = styled(Button)`
   :hover,
   :focus {
