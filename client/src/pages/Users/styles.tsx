@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Button, Switch } from 'antd';
+import { Button, Spin, Switch } from 'antd';
 
 export const Container = styled.div`
   display: flex;
@@ -24,4 +24,10 @@ export const StyledButton = styled(Button)`
 
 export const StyledSwitch = styled(Switch)`
   background-color: ${(props) => props.theme.colors.primary};
+`;
+
+export const StyledSpin = styled(Spin)`
+  .ant-spin-dot-item {
+    background-color: ${(props) => props.theme.colors.primary};
+  }
 `;

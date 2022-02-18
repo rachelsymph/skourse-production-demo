@@ -1,23 +1,17 @@
 import { Form, Input } from 'antd';
-import React, { useEffect, useState } from 'react';
-import { getUsers, saveUser } from '../../api/UsersApi';
-import { User } from '../../types/Users.type';
+import React from 'react';
+import { saveUser } from '../../api/UsersApi';
 import ListUsers from './components/ListUsers';
-import { Container, StyledButton, StyledSwitch } from './styles';
+import useGetAllUsers from './hooks/useGetAllUser';
+import { Container, StyledButton, StyledSpin, StyledSwitch } from './styles';
 
 type ContentProps = {
   changeThemeHandler: () => void;
 };
 
 export function UsersPage(props: ContentProps) {
-  const [users, setUsers] = useState<User[]>([]);
+  const [users, isLoading, error, getUsers] = useGetAllUsers();
   const { changeThemeHandler } = props;
-
-  const getNames = async () => {
-    const result = await getUsers();
-    setUsers(result.data);
-    console.log(result.data);
-  };
 
   const saveName = async (name: string) => {
     const result = await saveUser(name);
@@ -31,10 +25,6 @@ export function UsersPage(props: ContentProps) {
   const onFinishFailed = (errorInfo: any) => {
     console.log('Failed:', errorInfo);
   };
-
-  useEffect(() => {
-    getNames();
-  }, []);
 
   return (
     <Container>
@@ -64,7 +54,12 @@ export function UsersPage(props: ContentProps) {
           <StyledSwitch onClick={changeThemeHandler} />
         </Form.Item>
       </Form>
-      <ListUsers users={users} />
+
+      {isLoading ? (
+        <StyledSpin size='large' />
+      ) : (
+        <ListUsers users={users} getNewUsers={getUsers} />
+      )}
     </Container>
   );
 }
