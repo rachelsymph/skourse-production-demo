@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { GenericResponse } from '../types/Generics.type';
-import { GetUsersResponse, SaveUserResponse } from '../types/Users.type';
+import { GetUsersResponse, SaveUserResponse, User } from '../types/Users.type';
 
 const baseUrl =
   process.env.REACT_APP_API_URL || 'http://localhost:8000/api/users';
@@ -42,4 +42,18 @@ async function deleteUser(id: string) {
   }
 }
 
-export { deleteUser, getUsers, saveUser };
+async function editUser(params: User) {
+  const { _id, name } = params;
+  const url = baseUrl + `/${_id}`;
+
+  try {
+    const result = await axios.put(url, name);
+
+    return result.data;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}
+
+export { deleteUser, editUser, getUsers, saveUser };
